@@ -56,7 +56,7 @@ function App() {
             {/* Contract Address - inline */}
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <span className="text-xs text-black/60 font-medium whitespace-nowrap">
-                CONTRACT:
+                CONTRACT(BNB Chain):
               </span>
               <div className="flex items-center gap-1 group flex-1 min-w-0">
                 <code className="flex-1 font-mono text-xs truncate group-hover:text-yellow-600 transition-colors">
@@ -108,7 +108,7 @@ function App() {
         {/* Bottom tagline */}
         <div className="max-w-4xl mx-auto w-full mt-6 text-center">
           <p className="text-xs text-black/50 font-light">
-            Built by <a href="https://x.com/WTFAcademy_" target="_blank" rel="noopener noreferrer" className="text-yellow-400">WTF Academy</a> Team
+            Built by <a href="https://x.com/mubarak_cto" target="_blank" rel="noopener noreferrer" className="text-yellow-400">Mubarak CTO</a> and <a href="https://x.com/WTFAcademy_" target="_blank" rel="noopener noreferrer" className="text-yellow-400">WTF Academy</a> Team
           </p>
         </div>
       </div>
