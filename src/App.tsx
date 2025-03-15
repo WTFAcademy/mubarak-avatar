@@ -108,7 +108,7 @@ function App() {
         {/* Bottom tagline */}
         <div className="max-w-4xl mx-auto w-full mt-6 text-center">
           <p className="text-xs text-black/50 font-light">
-            Built by WTF Academy Team
+            Built by <a href="https://x.com/WTFAcademy_" target="_blank" rel="noopener noreferrer" className="text-yellow-400">WTF Academy</a> Team
           </p>
         </div>
       </div>
