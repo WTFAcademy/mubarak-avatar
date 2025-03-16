@@ -5,6 +5,7 @@ export interface ImageTransform {
   positionX: number;
   positionY: number;
   rotation: number;
+  flipX: boolean;
 }
 
 export interface ImageEditorHook {
@@ -26,6 +27,7 @@ export interface ImageEditorHook {
   exportImage: () => void;
   getControlPoints: () => {width?: string, height?: string, transform?: string};
   drawImageOnCanvas: () => void;
+  handleFlip: () => void;
 }
 
 export default function useImageEditor(templateSrc: string): ImageEditorHook {
@@ -36,7 +38,7 @@ export default function useImageEditor(templateSrc: string): ImageEditorHook {
   
   const templateImageRef = useRef<HTMLImageElement | null>(null);
   
-  const [transform, setTransform] = useState<ImageTransform>({ scale: 1, positionX: 0, positionY: 0, rotation: 0 });
+  const [transform, setTransform] = useState<ImageTransform>({ scale: 1, positionX: 0, positionY: 0, rotation: 0, flipX: false });
   const [isDragging, setIsDragging] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -192,6 +194,9 @@ export default function useImageEditor(templateSrc: string): ImageEditorHook {
       ctx.save();
       ctx.translate(centerX + transform.positionX, centerY + transform.positionY);
       ctx.rotate(transform.rotation * Math.PI / 180);
+      if (transform.flipX) {
+        ctx.scale(-1, 1);
+      }
       ctx.drawImage(img, -width/2, -height/2, width, height);
       ctx.restore();
     }
@@ -211,7 +216,7 @@ export default function useImageEditor(templateSrc: string): ImageEditorHook {
       const reader = new FileReader();
       reader.onload = (e) => {
         // 重置变换状态
-        setTransform({ scale: 1, positionX: 0, positionY: 0, rotation: 0 });
+        setTransform({ scale: 1, positionX: 0, positionY: 0, rotation: 0, flipX: false });
         
         const img = new Image();
         img.onload = () => {
@@ -263,6 +268,9 @@ export default function useImageEditor(templateSrc: string): ImageEditorHook {
       exportCtx.save();
       exportCtx.translate(centerX + transform.positionX, centerY + transform.positionY);
       exportCtx.rotate(transform.rotation * Math.PI / 180);
+      if (transform.flipX) {
+        exportCtx.scale(-1, 1);
+      }
       exportCtx.drawImage(img, -width/2, -height/2, width, height);
       exportCtx.restore();
     }
@@ -320,6 +328,14 @@ export default function useImageEditor(templateSrc: string): ImageEditorHook {
     };
   };
 
+  // 添加翻转处理函数
+  const handleFlip = () => {
+    setTransform(prev => ({
+      ...prev,
+      flipX: !prev.flipX
+    }));
+  };
+
   useEffect(() => {
     // 创建并加载模板图像
     const templateImage = new Image();
@@ -363,6 +379,7 @@ export default function useImageEditor(templateSrc: string): ImageEditorHook {
     handleImageUpload,
     exportImage,
     getControlPoints,
-    drawImageOnCanvas
+    drawImageOnCanvas,
+    handleFlip,
   };
 } 

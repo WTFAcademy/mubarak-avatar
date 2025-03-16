@@ -1,5 +1,5 @@
 import React, { CSSProperties, useState } from 'react';
-import { RotateCw, Upload, Download, Info, Check, ChevronDown, Camera, Zap } from 'lucide-react';
+import { RotateCw, Upload, Download, Info, Check, ChevronDown, Camera, Zap, FlipHorizontal } from 'lucide-react';
 import useImageEditor from '../hooks/useImageEditor';
 
 interface ImageEditorProps {
@@ -22,7 +22,8 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ templateSrc, onExport }) => {
     handleTouchMove,
     handleImageUpload,
     exportImage,
-    getControlPoints
+    getControlPoints,
+    handleFlip,
   } = useImageEditor(templateSrc);
 
   const handleExport = () => {
@@ -103,11 +104,21 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ templateSrc, onExport }) => {
                   
                   {/* Rotation control */}
                   <div 
-                    className="absolute -top-9 left-1/2 transform -translate-x-1/2 w-7 h-7 bg-black rounded-full border-2 border-white flex items-center justify-center cursor-grab shadow-lg pointer-events-auto z-20"
-                    onMouseDown={handleRotateStart}
-                    onTouchStart={handleRotateStart}
+                    className="absolute -top-9 left-1/2 transform -translate-x-1/2 flex gap-2"
                   >
-                    <RotateCw className="w-4 h-4 text-white" />
+                    <div 
+                      className="w-7 h-7 bg-black rounded-full border-2 border-white flex items-center justify-center cursor-grab shadow-lg pointer-events-auto z-20"
+                      onMouseDown={handleRotateStart}
+                      onTouchStart={handleRotateStart}
+                    >
+                      <RotateCw className="w-4 h-4 text-white" />
+                    </div>
+                    <div 
+                      className="w-7 h-7 bg-black rounded-full border-2 border-white flex items-center justify-center cursor-pointer shadow-lg pointer-events-auto z-20"
+                      onClick={handleFlip}
+                    >
+                      <FlipHorizontal className="w-4 h-4 text-white" />
+                    </div>
                   </div>
                   
                   {/* Control frame border */}
